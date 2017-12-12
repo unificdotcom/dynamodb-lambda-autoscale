@@ -36,3 +36,6 @@ dist/
 dist.zip
 build/
 config.env.production
+
+.idea
+.serverless
