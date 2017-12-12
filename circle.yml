@@ -1,0 +1,16 @@
+version: 2
+executorType: docker
+containerInfo:
+  - image: underwaterpony/centos:20170607
+stages:
+  build:
+    workDir: ~/dynamodb-lambda-autoscale
+    steps:
+      - type: checkout
+
+      - type: deploy
+        name: serverless deploy
+        command: |
+          npm install
+          npm run build
+          serverless deploy -v
