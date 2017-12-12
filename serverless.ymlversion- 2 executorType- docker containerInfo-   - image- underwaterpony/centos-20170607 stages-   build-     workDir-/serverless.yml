@@ -1,0 +1,58 @@
+service: dynamodb-lambda-autoscale
+
+frameworkVersion: ">=1.14.0"
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  region: us-west-2
+  profile: circle-ci
+  versionFunctions: true
+  memorySize: 512
+  timeout: 45
+  deploymentBucket: unific-lambdas
+
+package:
+  artifact: dist.zip
+
+functions:
+  dynamodb-lambda-autoscale:
+    handler: index.handler
+    name: ${self:service}
+    description: Monitors DynamoDB table consumed capacity and throttles and dynamically scales provisioned capacity
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:ListTables
+          - dynamodb:DescribeTable
+          - dynamodb:UpdateTable
+        Resource: "arn:aws:dynamodb:${self:provider.region}:188664007186:table/*"
+      - Effect: Allow
+        Action:
+          - cloudwatch:GetMetricStatistics
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource: "arn:aws:logs:${self:provider.region}:188664007186:*"
+    events:
+      - schedule:
+          rate: rate(1 minute)
+
+custom:
+  notifications:
+    - protocol: sns
+      endpoint: arn:aws:sns:${self:provider.region}:188664007186:UnificOpsTeam
+
+  alerts:
+    topics:
+      alarm:
+        topic: ${self:service}-alerts-alarm
+        notifications: ${self:custom.notifications}
+    global:
+      - functionThrottles
+
+resources:
+  Resources:
