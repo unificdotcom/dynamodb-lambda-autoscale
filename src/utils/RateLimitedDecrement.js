@@ -43,7 +43,7 @@ export default class RateLimitedDecrement {
     adjustmentContext: AdjustmentContext) {
 
     // Check if we have already had all the decreases we are allowed today
-    if (data.ProvisionedThroughput.NumberOfDecreasesToday >= 4) {
+    if (data.ProvisionedThroughput.NumberOfDecreasesToday >= 8) {
       return this.getTomorrowDate();
     }
 
@@ -54,7 +54,7 @@ export default class RateLimitedDecrement {
     // Get the next allowed decrement
     let lastAllowedDecrementDate = this.getLastAllowedDecrementDate();
     let periodMs = lastAllowedDecrementDate.valueOf() - lastDecrementDate.valueOf();
-    let periodMs2 = periodMs / (5 - data.ProvisionedThroughput.NumberOfDecreasesToday);
+    let periodMs2 = periodMs / (9 - data.ProvisionedThroughput.NumberOfDecreasesToday);
     let nextDecrementDate = this.getLastDecrementDate(lastDecrease);
     nextDecrementDate.setMilliseconds(nextDecrementDate.getMilliseconds() + periodMs2);
 
