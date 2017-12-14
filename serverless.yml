@@ -55,3 +55,7 @@ custom:
         notifications: ${self:custom.notifications}
     global:
       - functionThrottles
+
+  prune:
+    automatic: true
+    number: 5
