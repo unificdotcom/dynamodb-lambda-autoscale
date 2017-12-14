@@ -6,7 +6,6 @@ provider:
   name: aws
   runtime: nodejs4.3
   region: us-west-2
-  profile: circle-ci
   versionFunctions: true
   memorySize: 512
   timeout: 45
