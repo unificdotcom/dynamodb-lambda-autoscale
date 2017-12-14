@@ -1,6 +1,9 @@
 service: dynamodb-lambda-autoscale
 
-frameworkVersion: ">=1.14.0"
+frameworkVersion: ">=1.20.0"
+
+plugins:
+  - serverless-prune-plugin
 
 provider:
   name: aws
@@ -52,6 +55,3 @@ custom:
         notifications: ${self:custom.notifications}
     global:
       - functionThrottles
-
-resources:
-  Resources:
