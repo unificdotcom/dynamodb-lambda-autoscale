@@ -10,6 +10,7 @@ provider:
   runtime: nodejs4.3
   region: us-west-2
   versionFunctions: true
+  role: arn:aws:iam::188664007186:role/dynamodb-autoscale-lambda-role
   memorySize: 512
   timeout: 45
   deploymentBucket: unific-lambdas
@@ -22,23 +23,6 @@ functions:
     handler: index.handler
     name: ${self:service}
     description: Monitors DynamoDB table consumed capacity and throttles and dynamically scales provisioned capacity
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:ListTables
-          - dynamodb:DescribeTable
-          - dynamodb:UpdateTable
-        Resource: "arn:aws:dynamodb:${self:provider.region}:188664007186:table/*"
-      - Effect: Allow
-        Action:
-          - cloudwatch:GetMetricStatistics
-        Resource: "*"
-      - Effect: Allow
-        Action:
-          - logs:CreateLogGroup
-          - logs:CreateLogStream
-          - logs:PutLogEvents
-        Resource: "arn:aws:logs:${self:provider.region}:188664007186:*"
     events:
       - schedule:
           rate: rate(1 minute)
