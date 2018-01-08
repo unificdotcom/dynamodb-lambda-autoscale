@@ -1,6 +1,6 @@
 {
   "ReadCapacity": {
-    "Min": 1,
+    "Min": 5,
     "Max": 100,
     "Increment": {
       "When": {
@@ -29,7 +29,7 @@
     }
   },
   "WriteCapacity": {
-    "Min": 1,
+    "Min": 5,
     "Max": 100,
     "Increment": {
       "When": {
