@@ -1,11 +1,13 @@
 /* @flow */
-/* eslint-disable max-len */
+/* eslint-disable max-len,no-else-return */
 import ProvisionerConfigurableBase from './provisioning/ProvisionerConfigurableBase';
 import RateLimitedDecrement from './utils/RateLimitedDecrement';
 import Throughput from './utils/Throughput';
 import ProvisionerLogging from './provisioning/ProvisionerLogging';
 import { Region } from './configuration/Region';
 import DefaultProvisioner from './configuration/DefaultProvisioner';
+import ProdProvisioner from './configuration/ProdProvisioner';
+
 import { invariant } from './Global';
 import type { TableProvisionedAndConsumedThroughput, ProvisionerConfig, AdjustmentContext } from './flow/FlowTypes';
 
@@ -34,7 +36,17 @@ export default class Provisioner extends ProvisionerConfigurableBase {
   getTableConfig(data: TableProvisionedAndConsumedThroughput): ProvisionerConfig {
 
     // Option 1 - Default settings for all tables
-    return DefaultProvisioner;
+    // return DefaultProvisioner;
+
+
+    // Option 2 - Bespoke table specific settings
+    if (data.TableName === 'prod_campaigns') {
+      return ProdProvisioner;
+    } else if (data.TableName === 'prod_email_templates') {
+      return ProdProvisioner;
+    } else {
+      return DefaultProvisioner;
+    }
 
     // Option 2 - Bespoke table specific settings
     // return data.TableName === 'Table1' ? Climbing : Default;
