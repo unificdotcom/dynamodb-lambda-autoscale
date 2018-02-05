@@ -40,9 +40,9 @@ export default class Provisioner extends ProvisionerConfigurableBase {
 
 
     // Option 2 - Bespoke table specific settings
-    if (data.TableName === 'prod_campaigns') {
+    if (data.TableName === 'qa_campaigns') {
       return ProdProvisioner;
-    } else if (data.TableName === 'prod_email_templates') {
+    } else if (data.TableName === 'qa_email_templates') {
       return ProdProvisioner;
     } else {
       return DefaultProvisioner;
