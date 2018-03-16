@@ -11,8 +11,8 @@ provider:
   region: us-west-2
   versionFunctions: true
   role: arn:aws:iam::188664007186:role/dynamodb-autoscale-lambda-role
-  memorySize: 512
-  timeout: 50
+  memorySize: 1024
+  timeout: 55
   deploymentBucket: unific-lambdas
 
 package:
