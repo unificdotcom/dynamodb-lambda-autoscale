@@ -1,7 +1,7 @@
 version: 2
 executorType: docker
 containerInfo:
-  - image: underwaterpony/centos:20171211
+  - image: underwaterpony/centos:20180502
 stages:
   build:
     workDir: ~/dynamodb-lambda-autoscale
